@@ -15,13 +15,16 @@ from tkinter import *
 import os
 
 class PPHStat:
-    root = tkinter.Tk()
+    '''root = tkinter.Tk()
     root.withdraw() #use to hide tkinter window
     
     currdir = os.getcwd()
     tempdir = tkFileDialog.askdirectory(parent=root, initialdir=currdir, title='Please select a directory')
     if len(tempdir) > 0:
         os.chdir(tempdir)
+    '''
+    tempdir=input("Give me the folder, where data stored: ")
+    os.chdir(tempdir)
     nodes = pd.read_csv("fidesz_nodes.csv")
     edges = pd.read_csv("fidesz_edges.csv")     
     nodes=nodes[["ID","name", "address", "org_relations","person_relations"]]
@@ -165,7 +168,7 @@ class PPHStat:
     for i in list_name_y:
         filtered_po = merged_po2[merged_po2['name_y'] == i]
         kuka=pd.DataFrame(list(set(filtered_po['name_x'])))
-        kuka["id"]=[self.i for x in range(len(kuka))]
+        kuka["id"]=[i for x in range(len(kuka))]
         dict_name_y=dict_name_y.append(kuka, ignore_index=True)
     del kuka
 
