@@ -40,6 +40,6 @@ setup(
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
 
-    install_requires=['datetime','pandas','matplotlib','requests','numpy','Levenshtein', 'bokeh', 'networkx', 'urllib'],  # Optional
+    install_requires=['datetime','pandas','matplotlib','requests','numpy','python-levenshtein', 'bokeh', 'networkx', 'urllib'],  # Optional
 
 )
