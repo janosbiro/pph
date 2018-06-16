@@ -168,7 +168,7 @@ class PPHStat:
     for i in list_name_y:
         filtered_po = merged_po2[merged_po2['name_y'] == i]
         kuka=pd.DataFrame(list(set(filtered_po['name_x'])))
-        kuka["id"]=[i for x in range(len(kuka))]
+        kuka["id"]=[x for x in range(len(kuka))]
         dict_name_y=dict_name_y.append(kuka, ignore_index=True)
     del kuka
 
@@ -193,12 +193,12 @@ class PPHStat:
 
 	############
 	# Ez a függvény készíti el a Fideszes politikusok közbeszerzéssel kapcsolatos statisztikáit
-    def stats(df,start,end):
+    def stats(self,df,start,end):
         df=df[(df['PUBLIDATE'] > start) & (df['PUBLIDATE'] < end)]
         stat = pd.DataFrame(columns = ['ID','Nev', 'Nyert','Ertek_ossz', 'Atlag_ertek', 'Atlag_palyazo', 'Min_palyazo', 'Max_palyazo'])
-        stat['ID']=pd.Series(list(set(merged_po2['name_y'])))
+        stat['ID']=pd.Series(list(set(self.merged_po2['name_y'])))
         stat=stat.set_index(['ID'])
-        stat['Nev'] = pd.Series(list(set(merged_po2['name_y'])))
+        stat['Nev'] = pd.Series(list(set(self.merged_po2['name_y'])))
         stat['Nyert']=df[['PName','UID']].groupby(['PName']).agg(['count'])
         stat['Ertek_ossz']=df[['PName','VALUE']].groupby(['PName']).agg(['sum'])
         stat['Atlag_ertek']=df[['PName','VALUE']].groupby(['PName']).agg(['mean'])
