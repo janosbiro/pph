@@ -55,41 +55,41 @@ def cleanfirm(firmname):
     puts them in lowercase
     """
     return firmname.lower().replace(
-	'korlátolt felelősségű társaság','kft').replace(
-	'korlátolt felelősségü társaság','kft').replace(
-	'korlátotl felelősségű társaság','kft').replace(
-	'korlátolt felelısségő társaság','kft').replace(
-	'korlátolt felelősség társaság','kft').replace(
-	'korlátolt felelősségá társaság','kft').replace(
-	'korlátolt felelősságű társaság','kft').replace(
-	'korlátozott felelősségű társaság','kft').replace(
-	'korlátolt felelőségű társaság','kft').replace(
-	'kolrátolt felelősségű társaság','kft').replace(
-	'korlátol felelősségű társaság','kft').replace(
-	'korlát felelősségű társaság','kft').replace(
-	'korlátolt felelősségű társaság','kft').replace(
-	'korlátolt felelősségő társaság','kft').replace(
-	'korlátolt felelősségűbtársaság','kft').replace(
-	'korlátolt felelősségű táraság','kft').replace(
-	'korlátolt felelősségű táűrsaság','kft').replace(
-	'korlátolt felelősségű társasát','kft').replace(
-	'korlátolt felelősségű társasád','kft').replace(
-	'korlátolt felelősségű társasát','kft').replace(
-	' kereskedelmi és szolgáltató',' k & sz').replace(
-	' szolgáltató és kereskedelmi',' k & sz').replace(
-	'tanácsadó és szolgáltató kft', 't & sz kft').replace(
-	'kereskedelmi kft', 'kkft').replace(
-	'építőipari kft', 'ékft').replace(
-	'betéti társaság','bt').replace(
-	'közhasznú társaság','kht').replace(
-	'zártkörűen működő részvénytársaság','zrt').replace(
-	'részvénytársaság','rt').replace(
-	'kft.','kft').replace(
-	'bt.','bt').replace(
-	'rt.','rt').replace(
-	'zrt.','zrt')
+    'korlátolt felelősségű társaság','kft').replace(
+    'korlátolt felelősségü társaság','kft').replace(
+    'korlátotl felelősségű társaság','kft').replace(
+    'korlátolt felelısségő társaság','kft').replace(
+    'korlátolt felelősség társaság','kft').replace(
+    'korlátolt felelősségá társaság','kft').replace(
+    'korlátolt felelősságű társaság','kft').replace(
+    'korlátozott felelősségű társaság','kft').replace(
+    'korlátolt felelőségű társaság','kft').replace(
+    'kolrátolt felelősségű társaság','kft').replace(
+    'korlátol felelősségű társaság','kft').replace(
+    'korlát felelősségű társaság','kft').replace(
+    'korlátolt felelősségű társaság','kft').replace(
+    'korlátolt felelősségő társaság','kft').replace(
+    'korlátolt felelősségűbtársaság','kft').replace(
+    'korlátolt felelősségű táraság','kft').replace(
+    'korlátolt felelősségű táűrsaság','kft').replace(
+    'korlátolt felelősségű társasát','kft').replace(
+    'korlátolt felelősségű társasád','kft').replace(
+    'korlátolt felelősségű társasát','kft').replace(
+    ' kereskedelmi és szolgáltató',' k & sz').replace(
+    ' szolgáltató és kereskedelmi',' k & sz').replace(
+    'tanácsadó és szolgáltató kft', 't & sz kft').replace(
+    'kereskedelmi kft', 'kkft').replace(
+    'építőipari kft', 'ékft').replace(
+    'betéti társaság','bt').replace(
+    'közhasznú társaság','kht').replace(
+    'zártkörűen működő részvénytársaság','zrt').replace(
+    'részvénytársaság','rt').replace(
+    'kft.','kft').replace(
+    'bt.','bt').replace(
+    'rt.','rt').replace(
+    'zrt.','zrt')
 
-	
+    
 def split_lev(narray1,narray2,splitnum=3,limit=0.75):
     """
     takes 2 arrays, calcuates pairwise Levenshtein
@@ -170,9 +170,9 @@ print("to run the gecikereső use stats(df,start,end) function!")
 
 tempdir=input("Give me the folder, where data stored: ")
 os.chdir(tempdir)
-odes = pd.read_csv("fidesz_nodes.csv")
+nodes = pd.read_csv("fidesz_nodes.csv")
 edges = pd.read_csv("fidesz_edges.csv")     
-nodes=odes[["ID","name", "address", "org_relations","person_relations"]]
+nodes=nodes[["ID","name", "address", "org_relations","person_relations"]]
         ##here is the main process
 part  = pd.read_csv('part.csv')
 win_final = pd.read_csv('winner_resolved_final.csv')
