@@ -169,64 +169,64 @@ class PPHStat:
         return metszet, kulonbseg
     print("to run the gecikereső use stats(df,start,end) function!")
     
-    def __init__(self,tid):
-        self.tempdir=input("Give me the folder, where data stored: ")
-        os.chdir(self.tempdir)
-        self.selfnodes = pd.read_csv("fidesz_nodes.csv")
-        self.edges = pd.read_csv("fidesz_edges.csv")     
-        self.nodes=self.selfnodes[["ID","name", "address", "org_relations","person_relations"]]
-                ##here is the main process
-        self.part  = pd.read_csv('part.csv')
-        self.win_final = pd.read_csv('winner_resolved_final.csv')
-        self.p_o = pd.read_csv('P-O relations.csv')
-        self.fidesz_nodes = pd.read_csv("fidesz_nodes.csv")
-        self.mapping = pd.read_csv('mapping.csv')
-        
-        self.final_kozbesz3 = self.preproc (self.part, self.win_final)
-        
-        
-        self.fidesz_nodes = self.fidesz_nodes.rename(index=str, columns={'ID': 'Target'})
-        self.p_o = self.p_o.drop(['name'], axis=1)
-        self.merged_po = pd.merge(self.p_o, self.fidesz_nodes, how = 'inner', on = ['Target'])
-        
-        self.fidesz_nodes = self.fidesz_nodes.rename(index=str, columns={'Target': 'Source'})
-        self.merged_po2 = pd.merge(self.merged_po, self.fidesz_nodes, how = 'inner', on = ['Source'])
-        
-        self.merged_po2 = self.merged_po2.reset_index(drop=True)
-        
-        self.merged_po2['name_x'] = self.merged_po2['name_x'].apply(self.cleanfirm)
-        
-        
-        ####Innentől csináljuk meg az összekötést
-        self.list_name_y = list(set(self.merged_po2['name_y']))
-        
-        self.dict_name_y = pd.DataFrame()
-        
-        for i in self.list_name_y:
-            filtered_po = self.merged_po2[self.merged_po2['name_y'] == i]
-            kuka=pd.DataFrame(list(set(filtered_po['name_x'])))
-            kuka["id"]=[x for x in range(len(kuka))]
-            self.dict_name_y=self.dict_name_y.append(kuka, ignore_index=True)
-        del kuka
-        
-        # ebből készült a mapping df
-        # közbeszerzést nyert cégek és fideszesek cégei
-        self.list_firms = pd.Series(list(set(self.dict_name_y[0]))) 
-        self.list_kozbesz = pd.Series(list(set(self.win_final['NAME'])))
-        
-        #########
-        #Joinoljuk a mappingel
-        self.dict_name_y=pd.merge(self.dict_name_y,self.mapping, how="left", left_on=0 ,right_on='0')
-        self.dict_name_y=self.dict_name_y[["id",0,"1"]].dropna()
-        
-            ############
-        #Összehúzzuk a közbesz táblával
-        self.final_kozbesz3['NAME'] = self.final_kozbesz3['NAME'].apply(self.cleanfirm)
-        self.final_kozbesz3=self.final_kozbesz3[["UID","NOOFBIDDERS","VALUE","PUBLIDATE","NAME","CITY"]]
-        
-        self.dict_name_y=pd.merge(self.dict_name_y,self.final_kozbesz3, how="left", left_on='1', right_on="NAME")
-        self.dict_name_y["PName"]=self.dict_name_y["id"]
-        self.dict_name_y=self.dict_name_y.set_index(["id"])
+    tempdir=input("Give me the folder, where data stored: ")
+    os.chdir(tempdir)
+    odes = pd.read_csv("fidesz_nodes.csv")
+    edges = pd.read_csv("fidesz_edges.csv")     
+    nodes=odes[["ID","name", "address", "org_relations","person_relations"]]
+            ##here is the main process
+    part  = pd.read_csv('part.csv')
+    win_final = pd.read_csv('winner_resolved_final.csv')
+    p_o = pd.read_csv('P-O relations.csv')
+    fidesz_nodes = pd.read_csv("fidesz_nodes.csv")
+    mapping = pd.read_csv('mapping.csv')
+    
+    final_kozbesz3 = preproc (part, win_final)
+    
+    
+    fidesz_nodes = fidesz_nodes.rename(index=str, columns={'ID': 'Target'})
+    p_o = p_o.drop(['name'], axis=1)
+    merged_po = pd.merge(p_o, fidesz_nodes, how = 'inner', on = ['Target'])
+    
+    fidesz_nodes = fidesz_nodes.rename(index=str, columns={'Target': 'Source'})
+    merged_po2 = pd.merge(merged_po, fidesz_nodes, how = 'inner', on = ['Source'])
+    
+    merged_po2 = merged_po2.reset_index(drop=True)
+    
+    merged_po2['name_x'] = merged_po2['name_x'].apply(cleanfirm)
+    
+    
+    ####Innentől csináljuk meg az összekötést
+    list_name_y = list(set(merged_po2['name_y']))
+    
+    dict_name_y = pd.DataFrame()
+    
+    for i in list_name_y:
+        filtered_po = merged_po2[merged_po2['name_y'] == i]
+        kuka=pd.DataFrame(list(set(filtered_po['name_x'])))
+        kuka["id"]=[x for x in range(len(kuka))]
+        dict_name_y=dict_name_y.append(kuka, ignore_index=True)
+    del kuka
+    
+    # ebből készült a mapping df
+    # közbeszerzést nyert cégek és fideszesek cégei
+    list_firms = pd.Series(list(set(dict_name_y[0]))) 
+    list_kozbesz = pd.Series(list(set(win_final['NAME'])))
+    
+    #########
+    #Joinoljuk a mappingel
+    dict_name_y=pd.merge(dict_name_y,mapping, how="left", left_on=0 ,right_on='0')
+    dict_name_y=dict_name_y[["id",0,"1"]].dropna()
+    
+        ############
+    #Összehúzzuk a közbesz táblával
+    final_kozbesz3['NAME'] = final_kozbesz3['NAME'].apply(cleanfirm)
+    final_kozbesz3=final_kozbesz3[["UID","NOOFBIDDERS","VALUE","PUBLIDATE","NAME","CITY"]]
+    
+    dict_name_y=pd.merge(dict_name_y,final_kozbesz3, how="left", left_on='1', right_on="NAME")
+    dict_name_y["PName"]=dict_name_y["id"]
+    dict_name_y=dict_name_y.set_index(["id"])
+    print("to run the gecikereső use stats(df,start,end) function!")
         
         ############
                 
