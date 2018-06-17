@@ -133,6 +133,19 @@ def stats(df,start,end,merged_po2):
     #df.groupby(['PName']).agg([count'])
 
     return stat
+def keres (df, start1,end1, start2,end2,x):
+
+    idoszak1 = stats (df,start1,end1).sort_values(by=['Ertek_ossz'], ascending = False)
+    idoszak2 = stats (df, start2, end2).sort_values(by=['Ertek_ossz'], ascending = False)
+    
+    metszet1 = idoszak1[:x].index.values
+    metszet2 = idoszak2[:x].index.values
+
+    metszet = np.intersect1d(metszet1, metszet2)
+    
+    kulonbseg = np.append(np.setdiff1d(metszet1, metszet2), np.setdiff1d(metszet2, metszet1))
+    
+    return metszet, kulonbseg
 
 
 def preproc (part, win_final):
